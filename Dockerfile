@@ -25,5 +25,5 @@ COPY . .
 # Expose the port for Uvicorn
 EXPOSE 8000
 
-# Start the app with Uvicorn
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Start the application using Uvicorn
+CMD ["uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8000"]
