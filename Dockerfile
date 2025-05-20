@@ -1,18 +1,18 @@
-# Use the official slim Python image
+# Use a lightweight base image
 FROM python:3.11-slim
 
-# Set working directory
+# Set working directory to /app
 WORKDIR /app
 
-# Copy and install dependencies
+# Copy dependency list and install
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
+# Copy all remaining files (including app/)
 COPY . .
 
-# Expose the port uvicorn will run on
+# Open app port
 EXPOSE 8000
 
-# Start the FastAPI app with Uvicorn
+# Start FastAPI — referencing app inside /app
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
