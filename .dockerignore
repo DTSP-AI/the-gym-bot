@@ -1,24 +1,24 @@
-# Python cache
+# .dockerignore
+
+# Python cache & venv
 __pycache__/
 *.py[cod]
+.venv/
 
-# Environment
-.env
-
-# Git
+# Git metadata
 .git
 .gitignore
 
-# Docker
-docker-compose.yml
+# IDE/editor
+.vscode/
+*.code-workspace
 
-# Virtual envs
-.venv/
-venv/
+# Logs and env
+*.log
+
+# Exclude docker-compose override if you use one
+docker-compose.override.yml
+
 
 # VSCode workspace
 The-Gym Chatbot.code-workspace
-
-# IDEs
-.vscode/
-.idea/
