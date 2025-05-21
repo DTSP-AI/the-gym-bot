@@ -6,16 +6,16 @@
 FROM python:3.11-slim-buster
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /src
 
 # Copy the requirements.txt file into the container
-COPY ../requirements.txt /app/
+COPY ../requirements.txt /src/
 
 # Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application files into the container
-COPY .. /app/
+COPY .. /src/
 
 # Expose the port the app runs on
 EXPOSE 8000
