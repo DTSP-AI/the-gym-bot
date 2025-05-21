@@ -30,9 +30,12 @@ COPY src/ ./src/
 # This informs Docker that the container listens on the specified network ports at runtime.
 EXPOSE 8000
 
+# ─── Set a default PORT environment variable ───────────────────────────────────
+# This ensures a numeric value is always available for uvicorn.
+# Render or docker-compose can still override this if they set PORT.
+ENV PORT=8000
+
 # ─── Define the command to run the application ─────────────────────────────────
-# Use the shell form for ENTRYPOINT to allow shell variable expansion (like ${PORT}).
-# Uvicorn serves the FastAPI application.
-# --host 0.0.0.0 makes the app accessible from outside the container.
-# ${PORT:-8000} uses the PORT environment variable if set, otherwise defaults to 8000.
-ENTRYPOINT ["sh", "-c", "uvicorn src.app:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# Using the exec form of ENTRYPOINT is generally preferred for clarity and
+# ensures environment variables like ${PORT} are expanded directly by Docker.
+ENTRYPOINT ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "${PORT}"]
