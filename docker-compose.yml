@@ -7,8 +7,7 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-    # For live code reload during dev:
+    # Live code reload (dev)
     volumes:
       - ./src:/home/appuser/app/src
-      - ./prompts:/home/appuser/app/src/prompts
-
+      - ./src/prompts:/home/appuser/app/src/prompts

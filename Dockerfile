@@ -8,14 +8,16 @@ WORKDIR /home/appuser/app
 
 # Set up venv & install deps
 RUN python -m venv venv
-ENV PATH="/home/appuser/app/venv/bin:$PATH"
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN ./venv/bin/pip install --no-cache-dir -r requirements.txt
 
-# Copy app sources
+# Copy app sources (includes src/prompts/prompt.json)
 COPY src/ src/
+
+# Let runtime define port via $PORT
+ENV PORT=8000
 
 EXPOSE 8000
 
-# Start FastAPI from src/app.py
-CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Use venv's python explicitly
+CMD ["./venv/bin/uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "$PORT"]
