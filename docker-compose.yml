@@ -1,9 +1,14 @@
 services:
   gym-bot:
     build: .
-    container_name: gym_bot
+    container_name: gym-bot
     ports:
       - "8000:8000"
     env_file:
       - .env
     restart: unless-stopped
+    # For live code reload during dev:
+    volumes:
+      - ./src:/home/appuser/app/src
+      - ./prompts:/home/appuser/app/src/prompts
+
