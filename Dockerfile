@@ -1,29 +1,29 @@
-# Use the official slim Python image
+# Use minimal Python base image
 FROM python:3.11-slim
 
-# Create a non-root user
+# Create non-root user for security
 RUN adduser --disabled-password --gecos '' appuser
 
-# Set working directory to /app
+# Set working directory inside container
 WORKDIR /app
-
-# Switch to the new user
 USER appuser
 
-# Create and activate virtual environment
+# Set up Python virtual environment
 ENV VIRTUAL_ENV=/home/appuser/venv
 RUN python -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# Copy requirements and install dependencies
+# Copy pip requirements (from your root dir)
 COPY requirements.txt .
+
+# Install dependencies inside the venv
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the entire project into the container (includes app/, prompts/, etc.)
-COPY . .
+# Copy the entire `src/` directory into container at `/app/src/`
+COPY src/ src/
 
-# Expose the port your app will run on
+# Expose FastAPI default port
 EXPOSE 8000
 
-# Run the FastAPI app located in /app/app/app.py
-CMD ["uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Start FastAPI from `src/app.py` using `app` instance
+CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"]
