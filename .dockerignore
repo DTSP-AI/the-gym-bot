@@ -16,6 +16,9 @@ docker-compose.yml
 .venv/
 venv/
 
+# VSCode workspace
+The-Gym Chatbot.code-workspace
+
 # IDEs
 .vscode/
 .idea/
