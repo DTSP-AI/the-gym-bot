@@ -1,11 +1,13 @@
 services:
-  api:
-    build:
-      context: .
-      target: builder
+  gym-bot:
+    build: .
     container_name: gym-bot
-    environment:
-      PORT: 8000
     ports:
-      - '8000:8000'
-    restart: "no"
+      - "8000:8000"
+    env_file:
+      - .env
+    restart: unless-stopped
+    # Live code reload (dev)
+    volumes:
+      - ./src:/home/appuser/app/src
+      - ./src/prompts:/home/appuser/app/src/prompts
